@@ -198,33 +198,85 @@ class List {
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
 
 
-    /* ... */
+    /* fügt das element vorne an die Liste an */
     void push_front(T const& element) {
       // TODO: push_front-method (Aufgabe 3.3)
+      ListNode<T> *new_node = new ListNode<T>{ element };
+      if(empty()){
+          new_node->next = nullptr;
+          last_ = new_node;
+          }
+      else {
+          first_->prev = new_node;
+          new_node->next = first_;
+      }
+      new_node->prev = nullptr;
+      first_ = new_node;
+      ++size_;
+      delete new_node;
     }
 
-    /* ... */
+    /* fügt das element hinten and die Liste an */
     void push_back(T const& element) {
       // TODO: push_back-method (Aufgabe 3.3)
+        ListNode<T>* new_node = new ListNode<T>{ element };
+        if (empty()) {
+            new_node->prev = nullptr;
+            first_ = new_node;
+        }
+        else {
+            last_->next = new_node;
+            new_node->prev = last_;
+        }
+        new_node->next = nullptr;
+        last_ = new_node;
+        ++size_;
+        //delete new_node;
     }
 
-    /* ... */
+    /* entfernt das erste element aus der liste */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
       }
+      else if (size_ == 1) {
+          delete first_;
+          first_ = nullptr;
+          last_ = first_;
+      }
+      else {
+          auto new_first = first_->next;
+          new_first->prev = nullptr;
+          delete first_;
+          first_ = new_first;
+      }
+      --size_;
+    }
 
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
-    }
+    
 
     /* ... */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
       }
+      else if (size_ == 1) {
+          delete first_;
+          first_ = nullptr;
+          last_ = first_;
+      }
+      else {
+          auto new_last = last_->prev;
+          new_last->next = nullptr;
+          delete last_;
+          last_ = new_last;
+      }
+      --size_;
+    }
 
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
-    }
+    
 
     /* ... */
     T& front() {
