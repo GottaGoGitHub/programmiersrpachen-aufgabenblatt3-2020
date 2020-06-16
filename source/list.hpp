@@ -166,6 +166,7 @@ class List {
     /* ... */
     ~List() {
       //TODO: Implement via clear-Method (Aufgabe 3.4)
+        clear();
     } //can not really be tested
 
     /* ... */
@@ -185,7 +186,11 @@ class List {
     /* ... */ 
     // test and implement:
     //TODO: clear()-Method (Aufgabe 3.4)
-
+    void clear() {
+        while (!empty()) {
+            pop_back();
+        }
+    }
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
