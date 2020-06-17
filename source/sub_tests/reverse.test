@@ -1,0 +1,17 @@
+TEST_CASE("reverse a list", "[reverse]") {
+    List<int> list{};
+
+    list.push_back(420);
+    list.push_back(69);
+    list.push_back(187);
+
+    list.reverse();
+
+    REQUIRE(nullptr == get_first_pointer(list)->prev);
+    REQUIRE(187 == get_first_pointer(list)->value);
+    REQUIRE(69 == get_first_pointer(list)->next->value);
+    REQUIRE(69 == get_last_pointer(list)->prev->value);
+    REQUIRE(420 == get_last_pointer(list)->value);
+    REQUIRE(nullptr == get_last_pointer(list)->next); 
+
+}

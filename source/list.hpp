@@ -159,19 +159,48 @@ class List {
     /* ... */
     // test and implement:
     //TODO: (unifying) Assignment operator (Aufgabe 3.6)
+    void swap(List& Liste) {
+        std::swap(size_, Liste.size_);
+        std::swap(first_, Liste.first_);
+        std::swap(last_, Liste.last_);
+    }
+    
+    List& operator=(List const* Liste) {
+        swap(Liste);
+        return *this;
+    }
 
     /* ... */
     // test and implement:
 
+    //TODO: operator== (Aufgabe 3.8)
     bool operator==(List const& rhs) const
     {
-      //TODO: operator== (Aufgabe 3.8)
+        if (this->size_ != rhs.size_) {
+            return false;
+        }
+        else {
+            ListNode<T>* new_first = first_;
+            ListNode<T>* rhs_first = rhs.first_;
+            while (new_first != nullptr && rhs_first) {
+                if (new_first->value == rhs_first->value) {
+                    return true;
+                }
+                new_first = new_first->next;
+                rhs_first = rhs_first->next;
+            }
+            return false;
+        }
     }
 
     bool operator!=(List const& rhs) const
     {
       //TODO: operator!= (Aufgabe 3.8)
       // make use of operator==
+        if (*this == rhs) {
+            return false;
+        }
+        return true;
     }
 
     /* ... */
@@ -212,6 +241,17 @@ class List {
     /* ... */
 
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
+    void reverse() {
+        ListNode<T>* elem = first_;
+        ListNode<T>* temp;
+        while (elem != nullptr) {
+            temp = elem->prev;
+            elem->prev = elem->next;
+            elem->next = temp;
+            elem = elem->prev;
+        }
+        std::swap(first_, last_);
+    }
 
 
     /* fügt das element vorne an die Liste an */
@@ -229,7 +269,7 @@ class List {
       new_node->prev = nullptr;
       first_ = new_node;
       ++size_;
-      delete new_node;
+      //delete new_node;
     }
 
     /* fügt das element hinten and die Liste an */
@@ -340,6 +380,13 @@ class List {
 /* ... */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
+template<typename T>
+List<T>* reverse(List<T> const& Liste) {
+    List<T>* temp = new List<T>{ Liste };
+    temp->reverse();
+    return temp;
+    delete temp;
+}
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.10 - Teil 2)

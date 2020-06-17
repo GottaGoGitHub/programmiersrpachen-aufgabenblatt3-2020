@@ -1,0 +1,16 @@
+TEST_CASE("==opertaor", "[operator== !=]") {
+    List<int> original_list{};
+
+    original_list.push_back(420);
+    original_list.push_back(69);
+    original_list.push_back(187);
+
+    List<int> copy_list{original_list};
+
+    REQUIRE(original_list == copy_list);
+
+    copy_list.push_back(1337);
+
+    REQUIRE(original_list != copy_list);
+   
+}

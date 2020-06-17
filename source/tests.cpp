@@ -19,18 +19,24 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 #include "sub_tests/default_constructed_list.test"
 
 //test case definitions for push methods of list
-//#include "sub_tests/push_front.test"
-//#include "sub_tests/push_back.test"
+#include "sub_tests/push_front.test"
+#include "sub_tests/push_back.test"
 
 //test case definitions for pop methods of list
-//#include "sub_tests/pop_front.test"
-//#include "sub_tests/pop_back.test"
+#include "sub_tests/pop_front.test"
+#include "sub_tests/pop_back.test"
 
 //test for clear
 #include "sub_tests/clear.test"
 
 //copy contructor
 #include "sub_tests/copy.test"
+
+//reverse list
+#include "sub_tests/reverse.test"
+
+//equality test
+#include "sub_tests/equality.test"
 
 //test case definitions for 
 
@@ -52,6 +58,7 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 
 int main(int argc, char *argv[])
 {
+    std::cout << "Test werden durchgeführt\n";
   return Catch::Session().run(argc, argv);
 }
 
