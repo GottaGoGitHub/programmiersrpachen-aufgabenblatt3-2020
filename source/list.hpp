@@ -38,7 +38,7 @@ struct ListIterator {
 
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator* (Aufgabe 3.12 - Teil 1)
-
+    return node->value;
   } //call *it
 
   /* DESCRIPTION  operator->() */
@@ -49,6 +49,7 @@ struct ListIterator {
 
     //TODO: remaining implementation of derefenciation of 
     //      iterator using operator-> (Aufgabe 3.12 - Teil 2)
+    return &node->value;
   }  //call it->method() or it->member
 
 
@@ -60,7 +61,8 @@ struct ListIterator {
 
     //TODO: Implement Postincrement-Operation for Iterator
     //      (Aufgabe 3.12 - Teil 3)
-    
+    node = node->next;
+    return *this;
   }
 
   /* POSTINCREMENT (signature distinguishes the iterators), 
@@ -72,24 +74,32 @@ struct ListIterator {
 
     //TODO: Implement Postincrement-Operation for Iterator
     //      (Aufgabe 3.12 - Teil 4)
-
+    ListIterator<T> it = *this;
+    node = node->next;
+    return it;
   }
 
 
-  /* ... */
+  /* check if 2 iterators point to the same node */
   bool operator==(ListIterator<T> const& x) const {
     //TODO: Implement Equality-Operation for Iterator
     //      (Aufgabe 3.12 - Teil 5)
     // Iterators should be the same if they refer to the same node
+      if (x.node == node) {
+          return true;
+      }
     return false;
   } // call it: == it
 
-  /* ... */
+  /* check if 2 iterators point to a different node */
   bool operator!=(ListIterator<T> const& x) const {
     //TODO: Implement Inequality-Operation for Iterator  
     //      (Aufgabe 3.12 - Teil 6)
     // Reuse operator==
-    return false;
+      if (x == *this) {
+          return false;
+      }
+    return true;
   } // call it: != it
 
   /* Advances Iterator */
@@ -345,6 +355,9 @@ class List {
       }
 
       // TODO: remainder of front-method (Aufgabe 3.3)
+      else {
+          return first_->value;
+      }
     }
 
     /* ... */
@@ -354,6 +367,9 @@ class List {
       }
 
       // TODO: remainder of back-method (Aufgabe 3.3)
+      else {
+          return last_->value;
+      }
     }
 
     /* ... */
