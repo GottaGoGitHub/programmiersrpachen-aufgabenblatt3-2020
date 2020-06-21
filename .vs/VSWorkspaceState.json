@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\source",
-    "\\source\\sub_tests"
+    "\\source\\sub_tests",
+    "\\source\\sub_tests\\iterators"
   ],
-  "SelectedNode": "\\.gitignore",
+  "SelectedNode": "\\source\\tests.cpp",
   "PreviewInSolutionExplorer": false
 }

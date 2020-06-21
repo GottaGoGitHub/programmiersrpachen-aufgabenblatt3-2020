@@ -248,6 +248,19 @@ class List {
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.13)
+    ListIterator<T> insert(ListIterator<T> pos, T const& elem) {
+        if (pos == begin()) {
+            push_front(elem);
+            return begin();
+        }
+        else {
+            ListNode<T>* new_node = new ListNode<T>{ elem, pos.node->prev, pos.node };
+            pos.node->prev->next = new_node;
+            pos.node->prev = new_node;
+            return ListIterator<T>{new_node};
+        }
+    }
+
 
     /* ... */
     //TODO: member function insert (Aufgabe 3.14)

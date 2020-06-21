@@ -1,0 +1,9 @@
+TEST_CASE("insert a node at a given iterator pos", "[insert]") {
+	List<int> list{};
+
+	list.push_front(420);
+	list.insert(list.begin(), 69);
+
+	REQUIRE(get_first_pointer(list)->value == 69);
+	REQUIRE(get_last_pointer(list)->value == 420);
+}
