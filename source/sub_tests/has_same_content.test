@@ -1,0 +1,15 @@
+TEST_CASE("has same content", "[compare]") {
+	List<int> list{};
+	std::vector<int> vec{};
+
+	list.push_front(420);
+	list.insert(list.begin(), 69);
+
+	list.push_front(1337);
+
+	vec.push_back(1337);
+	vec.push_back(69);
+	vec.push_back(420);
+
+	REQUIRE(has_same_content(list, vec) == true);
+}

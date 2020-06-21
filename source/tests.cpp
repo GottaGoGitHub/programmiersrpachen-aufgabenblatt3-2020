@@ -58,6 +58,14 @@ ListNode<T>* get_last_pointer(List<T> const& list_to_test) {return list_to_test.
 //insert test
 #include "sub_tests/insert.test"
 
+//erase test
+#include "sub_tests/erase.test"
+
+//test for has_same_content
+#include "sub_tests/has_same_content.test"
+
+//move
+#include "sub_tests/move_constructor.test"
 
 int main(int argc, char *argv[])
 {

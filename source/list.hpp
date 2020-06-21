@@ -138,7 +138,7 @@ class List {
 
     // not fully implemented yet
     // TODO: do not forget about the initialiser list! (Aufgabe 3.2)
-    /* ... */
+    /* default constructor */
     List():
         size_{ 0 }, first_{ nullptr }, last_{ nullptr }{}
 
@@ -158,6 +158,15 @@ class List {
 
     // test and implement:
     // TODO: Move-Konstruktor (Aufgabe 3.9)
+    List(List<T>&& list) :
+        size_{ list.size() },
+        first_{ list.first_ },
+        last_{ list.last_ }{
+        list.first_ = nullptr;
+        list.last_ = nullptr;
+        list.size_ = 0;
+    }
+
 
     //TODO: Initializer-List Konstruktor (3.10 - Teil 1)
     /* ... */
@@ -166,7 +175,7 @@ class List {
       //not implemented yet
     }
 
-    /* ... */
+    /* use standart swap to implement assignment operator */
     // test and implement:
     //TODO: (unifying) Assignment operator (Aufgabe 3.6)
     void swap(List& Liste) {
@@ -180,7 +189,7 @@ class List {
         return *this;
     }
 
-    /* ... */
+    /* compare if to lists are the same */
     // test and implement:
 
     //TODO: operator== (Aufgabe 3.8)
@@ -213,13 +222,13 @@ class List {
         return true;
     }
 
-    /* ... */
+    /* destructor using clean method */
     ~List() {
       //TODO: Implement via clear-Method (Aufgabe 3.4)
         clear();
     } //can not really be tested
 
-    /* ... */
+    /* begin() returns an iterator the the first element of a list */
     ListIterator<T> begin() {
       //TODO: begin-Method returning an Iterator to the 
       //      first element in the List (Aufgabe 3.11)
@@ -228,7 +237,7 @@ class List {
         return begin;
     }
 
-    /* ... */
+    /* end() returns an iterator the the element after the last element of a list, beeing always nullptr */
     ListIterator<T> end() {
       //TODO: end-Method returning an Iterator to element after (!) 
       //      the last element in the List (Aufgabe 3.11)
@@ -237,7 +246,7 @@ class List {
         return end;
     }
 
-    /* ... */ 
+    /* pop all elements until list is empty */ 
     // test and implement:
     //TODO: clear()-Method (Aufgabe 3.4)
     void clear() {
@@ -246,7 +255,7 @@ class List {
         }
     }
 
-    /* ... */
+    /* insert an element with O(1) runtime at any given position via iterators */
     //TODO: member function insert (Aufgabe 3.13)
     ListIterator<T> insert(ListIterator<T> pos, T const& elem) {
         if (pos == begin()) {
@@ -261,11 +270,32 @@ class List {
         }
     }
 
-
-    /* ... */
+    /* delete an element at any position in list via iterators and return element after deleted */
     //TODO: member function insert (Aufgabe 3.14)
+    ListIterator<T> erase(ListIterator<T> pos) {
+        auto temp_next = pos.node->next;
+        if (pos == begin()) {
+            pop_front();
+            return begin();
+        }
+        else if (temp_next == nullptr) {
+            pop_back();
+            return end();
+        }
+        else {
+            pos.node->prev->next = temp_next;
+            temp_next->prev = pos.node->prev;
+            delete pos.node;
+            pos.node = nullptr;
+            --size_;
+            return ListIterator<T>{temp_next};
+        }
+    }
 
-    /* ... */
+
+    
+
+    /* reverse a list */
 
     //TODO: member function reverse (Aufgabe 3.7 - Teil 1)
     void reverse() {
@@ -281,7 +311,7 @@ class List {
     }
 
 
-    /* fügt das element vorne an die Liste an */
+    /* add element to the front of a list */
     void push_front(T const& element) {
       // TODO: push_front-method (Aufgabe 3.3)
       ListNode<T> *new_node = new ListNode<T>{ element };
@@ -299,7 +329,7 @@ class List {
       //delete new_node;
     }
 
-    /* fügt das element hinten and die Liste an */
+    /* add element to the back of a list */
     void push_back(T const& element) {
       // TODO: push_back-method (Aufgabe 3.3)
         ListNode<T>* new_node = new ListNode<T>{ element };
@@ -317,7 +347,7 @@ class List {
         //delete new_node;
     }
 
-    /* entfernt das erste element aus der liste */
+    /* deletes first element from list */
     void pop_front() {
       if(empty()) {
         throw "List is empty";
@@ -339,7 +369,7 @@ class List {
       // TODO: remainder of pop_front-method (Aufgabe 3.3)
     
 
-    /* ... */
+    /* deletes last element from list */
     void pop_back() {
       if(empty()) {
         throw "List is empty";
@@ -361,7 +391,7 @@ class List {
       // TODO: remainder of pop_back-method (Aufgabe 3.3)
     
 
-    /* ... */
+    /* returns the value of the first element in a list */
     T& front() {
       if(empty()) {
         throw "List is empty";
@@ -373,7 +403,7 @@ class List {
       }
     }
 
-    /* ... */
+    /* returns the value of the last element in a list */
     T& back() {
       if(empty()) {
         throw "List is empty";
@@ -385,7 +415,7 @@ class List {
       }
     }
 
-    /* ... */
+    /* checks if list is empty */
     bool empty() const {
 
       // TODO: empty-method (Aufgabe 3.2)
@@ -396,7 +426,7 @@ class List {
     };
 
 
-    /* ... */
+    /* return size of list */
     std::size_t size() const{
       // TODO: size-method (Aufgabe 3.2)   
         return size_;
@@ -410,7 +440,7 @@ class List {
     ListNode<T>* last_;
 };
 
-/* ... */
+/* its reverse but as a free funtion using the member function */
 //TODO: Freie Funktion reverse 
 //(Aufgabe 3.7 - Teil 2, benutzt Member-Funktion reverse)
 template<typename T>
@@ -420,6 +450,24 @@ List<T>* reverse(List<T> const& Liste) {
     return temp;
     delete temp;
 }
+
+/* checks if list and std::vector have the same content */
+template <typename T>
+bool has_same_content(List<T> const& list, std::vector<T> const& vec) {
+    if(list.size() != vec.size()){
+        return false;
+    }
+    else {
+        auto list_pointer = get_first_pointer(list);
+        for (int i = 0; i < vec.size(); ++i) {
+            if (list_pointer->value != vec[i]) {
+                return false;
+            }
+            list_pointer = list_pointer->next;
+        }
+    }
+    return true;
+}   
 
 /* ... */
 //TODO: Freie Funktion operator+ (3.10 - Teil 2)

@@ -1,0 +1,14 @@
+TEST_CASE("erase a node at a given iterator pos", "[erase]") {
+	List<int> list{};
+
+	list.push_front(420);
+	list.insert(list.begin(), 69);
+
+	list.push_front(1337);
+
+	REQUIRE(get_first_pointer(list)->value == 1337);
+
+	list.erase(list.begin());
+
+	REQUIRE(get_first_pointer(list)->value == 69);
+}
